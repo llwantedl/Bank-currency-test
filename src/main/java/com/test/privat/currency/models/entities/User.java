@@ -2,6 +2,7 @@ package com.test.privat.currency.models.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -30,15 +31,15 @@ public class User implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @OneToOne(optional = false)
+    private Currency valueCurrency;
+
     public User() {
+        roles = new HashSet<>();
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getLogin() {
@@ -47,10 +48,6 @@ public class User implements Serializable {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -63,6 +60,10 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setRole(Role role) {
+        this.roles.add(role);
     }
 
     public String getEmail() {
@@ -79,5 +80,17 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Currency getValueCurrency() {
+        return valueCurrency;
+    }
+
+    public void setValueCurrency(Currency valueCurrency) {
+        this.valueCurrency = valueCurrency;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
