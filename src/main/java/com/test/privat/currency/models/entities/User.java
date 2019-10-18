@@ -19,8 +19,8 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "user_role",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_ROLE",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
@@ -28,14 +28,16 @@ public class User implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "name")
-    private String name;
-
-    @OneToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "currency_id")
     private Currency valueCurrency;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<Wallet> wallets;
 
     public User() {
         roles = new HashSet<>();
+        wallets = new HashSet<>();
     }
 
     public Long getId() {
@@ -74,14 +76,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Currency getValueCurrency() {
         return valueCurrency;
     }
@@ -92,5 +86,21 @@ public class User implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<Wallet> getWallets() {
+        return wallets;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallets.add(wallet);
+    }
+
+    public void setWallets(Set<Wallet> wallets) {
+        this.wallets = wallets;
     }
 }

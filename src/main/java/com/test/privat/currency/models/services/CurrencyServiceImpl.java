@@ -5,6 +5,9 @@ import com.test.privat.currency.models.repositories.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
 
@@ -23,5 +26,10 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public Currency getByKey(String key) {
         return currencyRepository.getByKey(key);
+    }
+
+    @Override
+    public List<Currency> getAll() {
+        return currencyRepository.findAll();
     }
 }

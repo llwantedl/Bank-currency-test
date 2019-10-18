@@ -1,8 +1,17 @@
 .content-container{
-    background-color: #AAAAFF;
+    background-color: #5c93d9;
     border-radius: 5px;
+    display: inline-block;
+    width: auto;
+    padding: 5px;
 }
 
 .window-page{
     text-align: center;
+}
+
+.validation-error{
+    color: darkred;
+    display: block;
+    padding: 3px;
 }
