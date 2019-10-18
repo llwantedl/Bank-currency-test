@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:beans="http://www.springframework.org/schema/beans"
-             xsi:schemaLocation="http://www.springframework.org/schema/beans
-             http://www.springframework.org/schema/beans/spring-beans.xsd
-             http://www.springframework.org/schema/security
-             http://www.springframework.org/schema/security/spring-security.xsd">
-    <http auto-config="true">
-        <form-login login-page="/login" default-target-url="/"
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/security
+        https://www.springframework.org/schema/security/spring-security.xsd">
+    <security:http auto-config="true">
+        <security:intercept-url pattern="/login" access="!isAuthenticated()"/>
+        <security:intercept-url pattern="/register" access="!isAuthenticated()"/>
+        <security:intercept-url pattern="/rest/data/currencies" access="permitAll()"/>
+        <security:intercept-url pattern="/*" access="isAuthenticated()"/>
+        <security:form-login login-processing-url="/login" login-page="/login" default-target-url="/"
                     always-use-default-target="true" username-parameter="login"
                     password-parameter="password"/>
-    </http>
+    </security:http>
 
-    <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="userDetailsServiceImpl">
-            <password-encoder ref="encoder"/>
-        </authentication-provider>
-    </authentication-manager>
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider user-service-ref="userDetailsServiceImpl">
+            <security:password-encoder ref="encoder"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
 
-    <beans:bean id="userDetailsServiceImpl"
+    <bean id="userDetailsServiceImpl"
                 class="com.test.privat.currency.models.services.UserDetailsServiceImpl">
-    </beans:bean>
+    </bean>
 
-    <beans:bean id="encoder"
+    <bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-        <beans:constructor-arg name="strength" value="11"/>
-    </beans:bean>
-</beans:beans>
+        <constructor-arg name="strength" value="11"/>
+    </bean>
+</beans>

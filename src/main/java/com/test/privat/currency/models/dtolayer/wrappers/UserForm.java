@@ -1,7 +1,7 @@
-package com.test.privat.currency.models.dtolayer;
+package com.test.privat.currency.models.dtolayer.wrappers;
 
 public class UserForm {
-    private String username;
+    private String login;
     private String email;
     private String password;
     private String confirmPassword;
@@ -10,12 +10,12 @@ public class UserForm {
     public UserForm() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getEmail() {

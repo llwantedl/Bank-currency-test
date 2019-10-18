@@ -1,9 +1,10 @@
 package com.test.privat.currency.models.services;
 
-import com.test.privat.currency.BankUserDetails;
-import com.test.privat.currency.models.UserCredentials;
+import com.test.privat.currency.models.BankUserDetails;
+import com.test.privat.currency.models.Credentials;
+import com.test.privat.currency.models.dtolayer.wrappers.UserForm;
 import com.test.privat.currency.models.entities.User;
-import com.test.privat.currency.models.exceptions.NoRemoteUserException;
+import com.test.privat.currency.models.exceptions.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,33 +37,42 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public User getRemoteUser() throws NoRemoteUserException {
+    public User getRemoteUser() throws UserNotFoundException {
         Object userDetailsObj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(userDetailsObj instanceof BankUserDetails)) {
-            throw new NoRemoteUserException("No remote user details was found");
+            throw new UserNotFoundException("No remote user details was found");
         }
         BankUserDetails userDetails = (BankUserDetails) userDetailsObj;
-        String username = userDetails.getUsername();
+        String login = userDetails.getUsername();
 
-        User remoteUser = userService.getByLogin(username);
+        User remoteUser = userService.getByLogin(login);
 
         if(Objects.isNull(remoteUser)){
-            throw new NoRemoteUserException("No user found by current user details");
+            throw new UserNotFoundException("No user found by current user details");
         }
 
         return remoteUser;
     }
 
     @Override
-    public void login(UserCredentials userCredentials) {
-        String username = userCredentials.getUsername();
+    public void login(Credentials credentials) {
+        String username = credentials.getLogin();
         BankUserDetails user = (BankUserDetails) userDetailsService.loadUserByUsername(username);
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user, userCredentials.getPassword(), user.getAuthorities());
+                new UsernamePasswordAuthenticationToken(user, credentials.getPassword(), user.getAuthorities());
         authenticationManager.authenticate(authenticationToken);
         if (authenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             logger.debug("User " + username + " successfully logged in");
         }
+    }
+
+    @Override
+    public void register(UserForm userForm) {
+        userService.create(userForm);
+        String login = userForm.getLogin();
+        String password = userForm.getConfirmPassword();
+        Credentials creds = Credentials.build(login, password);
+        login(creds);
     }
 }

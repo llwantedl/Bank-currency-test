@@ -1,4 +1,4 @@
-package com.test.privat.currency;
+package com.test.privat.currency.models;
 
 import com.test.privat.currency.models.entities.User;
 import org.springframework.security.core.GrantedAuthority;
