@@ -15,7 +15,7 @@
     <h1>Welcome to Test Bank!</h1>
 
     <div class="content-container">
-        <!--/*@thymesVar id="creds" type="com.test.privat.currency.models.Credentials"*/-->
+        <!--/*@thymesVar id="creds" type="com.test.privat.currency.models.security.Credentials"*/-->
         <form th:object="${creds}" class="sign-in-form" method="post" th:action="@{/login}">
 
             <div class="form-group">

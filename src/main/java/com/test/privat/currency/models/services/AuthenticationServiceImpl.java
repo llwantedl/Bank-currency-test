@@ -1,7 +1,7 @@
 package com.test.privat.currency.models.services;
 
-import com.test.privat.currency.models.BankUserDetails;
-import com.test.privat.currency.models.Credentials;
+import com.test.privat.currency.models.security.BankUserDetails;
+import com.test.privat.currency.models.security.Credentials;
 import com.test.privat.currency.models.dtolayer.wrappers.UserForm;
 import com.test.privat.currency.models.entities.User;
 import com.test.privat.currency.models.exceptions.UserNotFoundException;
@@ -43,15 +43,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new UserNotFoundException("No remote user details was found");
         }
         BankUserDetails userDetails = (BankUserDetails) userDetailsObj;
-        String login = userDetails.getUsername();
 
-        User remoteUser = userService.getByLogin(login);
+        return userDetails.getUser();
+    }
 
-        if(Objects.isNull(remoteUser)){
-            throw new UserNotFoundException("No user found by current user details");
-        }
+    @Override
+    public boolean isRemoteUser(User user) throws UserNotFoundException {
+        User remoteUser = getRemoteUser();
 
-        return remoteUser;
+        return !Objects.isNull(user) &&
+                user.getLogin().equals(remoteUser.getLogin());
+
     }
 
     @Override

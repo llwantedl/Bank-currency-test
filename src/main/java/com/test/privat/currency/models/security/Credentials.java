@@ -1,4 +1,4 @@
-package com.test.privat.currency.models;
+package com.test.privat.currency.models.security;
 
 public final class Credentials {
     private String login;

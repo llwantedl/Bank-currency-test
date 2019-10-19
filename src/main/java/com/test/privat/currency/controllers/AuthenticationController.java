@@ -1,6 +1,6 @@
 package com.test.privat.currency.controllers;
 
-import com.test.privat.currency.models.Credentials;
+import com.test.privat.currency.models.security.Credentials;
 import com.test.privat.currency.models.dtolayer.wrappers.UserForm;
 import com.test.privat.currency.models.services.AuthenticationService;
 import com.test.privat.currency.models.validators.UserValidator;

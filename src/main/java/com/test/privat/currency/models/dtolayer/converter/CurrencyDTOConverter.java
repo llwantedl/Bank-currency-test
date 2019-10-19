@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CurrencyConverter implements Converter<Currency, CurrencyWrapper> {
+public class CurrencyDTOConverter implements DTOConverter<Currency, CurrencyWrapper> {
 
     private final CurrencyService currencyService;
 
     @Autowired
-    public CurrencyConverter(CurrencyService currencyService) {
+    public CurrencyDTOConverter(CurrencyService currencyService) {
         this.currencyService = currencyService;
     }
 

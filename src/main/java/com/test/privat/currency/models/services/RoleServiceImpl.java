@@ -1,6 +1,6 @@
 package com.test.privat.currency.models.services;
 
-import com.test.privat.currency.models.UserRole;
+import com.test.privat.currency.models.security.UserRole;
 import com.test.privat.currency.models.entities.Role;
 import com.test.privat.currency.models.repositories.RoleRepository;
 import org.slf4j.Logger;
