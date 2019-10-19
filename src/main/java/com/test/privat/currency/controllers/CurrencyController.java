@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("rest")
 public class CurrencyController {
 
     private final CurrencyDTOService currencyDTOService;
@@ -19,7 +21,7 @@ public class CurrencyController {
         this.currencyDTOService = currencyDTOService;
     }
 
-    @GetMapping(value = "/rest/data/currencies",
+    @GetMapping(value = "/data/currencies",
             produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<CurrencyWrapper>> getCurrencies() {
         try {

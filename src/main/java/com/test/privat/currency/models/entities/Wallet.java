@@ -16,8 +16,8 @@ public class Wallet implements Serializable {
     @Column(name = "wallet_key")
     private String key;
 
-    @Column(name = "money")
-    private BigDecimal money;
+    @Column(name = "balance")
+    private BigDecimal balance;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -51,12 +51,12 @@ public class Wallet implements Serializable {
         this.key = key;
     }
 
-    public BigDecimal getMoney() {
-        return money;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setMoney(BigDecimal money) {
-        this.money = money;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public User getUser() {

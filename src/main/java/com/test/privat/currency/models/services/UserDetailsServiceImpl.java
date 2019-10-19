@@ -1,6 +1,6 @@
 package com.test.privat.currency.models.services;
 
-import com.test.privat.currency.models.BankUserDetails;
+import com.test.privat.currency.models.security.BankUserDetails;
 import com.test.privat.currency.models.entities.Role;
 import com.test.privat.currency.models.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;

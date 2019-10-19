@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -39,10 +40,32 @@ public class WalletServiceImpl implements WalletService {
         Wallet wallet = new Wallet();
 
         wallet.setUser(user);
-        wallet.setMoney(BigDecimal.ZERO);
+        wallet.setBalance(BigDecimal.ZERO);
         wallet.setBlock(false);
         wallet.setKey(UUID.randomUUID().toString());
 
         return walletRepository.save(wallet);
+    }
+
+    @Override
+    public List<Wallet> getByUser(User user) {
+        return walletRepository.getByUser(user);
+    }
+
+    @Override
+    public Wallet getByKey(String key) {
+        return walletRepository.getByKey(key);
+    }
+
+    @Override
+    public void addToBalance(Wallet wallet, BigDecimal amount) {
+        BigDecimal currentBalance = wallet.getBalance();
+        wallet.setBalance(currentBalance.add(amount));
+    }
+
+    @Override
+    public void subtractFromBalance(Wallet wallet, BigDecimal amount) {
+        BigDecimal currentBalance = wallet.getBalance();
+        wallet.setBalance(currentBalance.subtract(amount));
     }
 }

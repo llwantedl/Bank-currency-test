@@ -2,6 +2,7 @@ package com.test.privat.currency.models.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -12,6 +13,9 @@ public class Operation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(name = "key")
+    private String key;
+
     @ManyToOne
     @JoinColumn(name = "source_wallet_id")
     private Wallet sourceWallet;
@@ -21,13 +25,13 @@ public class Operation implements Serializable {
     private Wallet destinationWallet;
 
     @Column(name = "amount")
-    private long amount;
+    private BigDecimal amount;
 
     @Column(name = "transfer_date")
     private Date transferDate;
 
     @Column(name = "rate")
-    private long rate;
+    private BigDecimal rate;
 
     public Operation() {
     }
@@ -56,11 +60,11 @@ public class Operation implements Serializable {
         this.destinationWallet = destinationWallet;
     }
 
-    public long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -72,11 +76,19 @@ public class Operation implements Serializable {
         this.transferDate = transferDate;
     }
 
-    public long getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
-    public void setRate(long rate) {
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

@@ -28,7 +28,7 @@ public class User implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "currency_id")
     private Currency valueCurrency;
 
