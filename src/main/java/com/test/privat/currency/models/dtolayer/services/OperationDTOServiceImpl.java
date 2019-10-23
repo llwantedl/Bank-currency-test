@@ -35,7 +35,7 @@ public class OperationDTOServiceImpl implements OperationDTOService {
         List<OperationWrapper> operationWrappers = convertListToDTO(operations);
 
         operationWrapper.setEntityPage(operationWrappers);
-        operationWrapper.setEntitiesCount(operationService.count(wallet));
+        operationWrapper.setEntitiesCount(operationService.getPageCount(wallet));
 
         return operationWrapper;
     }

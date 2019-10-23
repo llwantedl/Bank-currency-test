@@ -3,7 +3,6 @@ package com.test.privat.currency.controllers;
 import com.test.privat.currency.models.dtolayer.services.CurrencyDTOService;
 import com.test.privat.currency.models.dtolayer.wrappers.CurrencyWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +24,9 @@ public class CurrencyController {
             produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<CurrencyWrapper>> getCurrencies() {
         try {
-            return new ResponseEntity<>(currencyDTOService.getAll(), HttpStatus.OK);
+            return ResponseEntity.ok(currencyDTOService.getAll());
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
     }
 }

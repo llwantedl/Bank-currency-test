@@ -1,6 +1,7 @@
 package com.test.privat.currency.controllers;
 
 import com.test.privat.currency.models.dtolayer.services.UserDetailsDTOService;
+import com.test.privat.currency.models.dtolayer.wrappers.TransferForm;
 import com.test.privat.currency.models.entities.User;
 import com.test.privat.currency.models.exceptions.UserNotFoundException;
 import com.test.privat.currency.models.services.AuthenticationService;
@@ -26,6 +27,7 @@ public class MainController {
     public String getMainPage(ModelMap modelMap) throws UserNotFoundException {
         User remoteUser = authenticationService.getRemoteUser();
         modelMap.addAttribute("remoteUser", userDetailsDTOService.getUserDetails(remoteUser));
+        modelMap.addAttribute("transferForm", new TransferForm());
         return "main";
     }
 }

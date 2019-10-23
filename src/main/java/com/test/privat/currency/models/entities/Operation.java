@@ -10,10 +10,10 @@ import java.util.Date;
 public class Operation implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "key")
+    @Column(name = "op_key")
     private String key;
 
     @ManyToOne
@@ -29,6 +29,9 @@ public class Operation implements Serializable {
 
     @Column(name = "transfer_date")
     private Date transferDate;
+
+    @Column(name = "commission")
+    private BigDecimal commission;
 
     @Column(name = "rate")
     private BigDecimal rate;
@@ -90,5 +93,13 @@ public class Operation implements Serializable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public BigDecimal getCommission() {
+        return commission;
+    }
+
+    public void setCommission(BigDecimal commission) {
+        this.commission = commission;
     }
 }

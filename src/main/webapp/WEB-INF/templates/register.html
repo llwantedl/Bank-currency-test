@@ -11,61 +11,65 @@
 </head>
 
 <body>
+
+<div class="content-block">
+
 <h2 class="hello-title"></h2>
 
 <!--/*@thymesVar id="userForm" type="com.test.privat.currency.models.dtolayer.wrappers.UserForm"*/-->
-<form method="post"
-      th:action="@{/register}"
-      th:object="${userForm}">
+    <form method="post"
+          th:action="@{/register}"
+          th:object="${userForm}">
 
-    <h1>Please enter next information</h1>
+        <h1>Please enter next information</h1>
 
-    <div class="form-group">
-        <input type="text" th:field="*{login}" class="form-control" placeholder="login"/>
+        <div class="form-group">
+            <input type="text" th:field="*{login}" class="form-control" placeholder="login"/>
 
-        <div class="validation-error" th:if="${#fields.hasErrors('login')}">
-            <p th:each="err : ${#fields.errors('login')}" th:text="${err}"></p>
+            <div class="validation-error" th:if="${#fields.hasErrors('login')}">
+                <p th:each="err : ${#fields.errors('login')}" th:text="${err}"></p>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <input type="password" th:field="*{password}" class="form-control" placeholder="password"/>
+        <div class="form-group">
+            <input type="password" th:field="*{password}" class="form-control" placeholder="password"/>
 
-        <div class="validation-error" th:if="${#fields.hasErrors('password')}">
-            <p th:each="err : ${#fields.errors('password')}" th:text="${err}"></p>
+            <div class="validation-error" th:if="${#fields.hasErrors('password')}">
+                <p th:each="err : ${#fields.errors('password')}" th:text="${err}"></p>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <input type="password" th:field="*{confirmPassword}" class="form-control" placeholder="confirm password"/>
+        <div class="form-group">
+            <input type="password" th:field="*{confirmPassword}" class="form-control" placeholder="confirm password"/>
 
-        <div class="validation-error" th:if="${#fields.hasErrors('confirmPassword')}">
-            <p th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></p>
+            <div class="validation-error" th:if="${#fields.hasErrors('confirmPassword')}">
+                <p th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></p>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <input type="email" th:field="*{email}" class="form-control" placeholder="email"/>
+        <div class="form-group">
+            <input type="email" th:field="*{email}" class="form-control" placeholder="email"/>
 
-        <div class="validation-error" th:if="${#fields.hasErrors('email')}">
-            <p th:each="err : ${#fields.errors('email')}" th:text="${err}"></p>
+            <div class="validation-error" th:if="${#fields.hasErrors('email')}">
+                <p th:each="err : ${#fields.errors('email')}" th:text="${err}"></p>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label for="user-currency-select">Currency</label>
-        <select th:field="*{currencyKey}" id="user-currency-select" class="form-control">
-            <!--/*@thymesVar id="currencies" type="com.test.privat.currency.models.dtolayer.wrappers.CurrencyWrapper"*/-->
-            <option th:each="curr : ${currencies}" th:value="${curr.key}" th:text="${curr.key}"></option>
-        </select>
+        <div class="form-group">
+            <label for="user-currency-select">Currency</label>
+            <select th:field="*{currencyKey}" id="user-currency-select" class="form-control">
+                <!--/*@thymesVar id="currencies" type="com.test.privat.currency.models.dtolayer.wrappers.CurrencyWrapper"*/-->
+                <option th:each="curr : ${currencies}" th:value="${curr.key}" th:text="${curr.key}"></option>
+            </select>
 
-        <div class="validation-error" th:if="${#fields.hasErrors('currencyKey')}">
-            <p th:each="err : ${#fields.errors('currencyKey')}" th:text="${err}"></p>
+            <div class="validation-error" th:if="${#fields.hasErrors('currencyKey')}">
+                <p th:each="err : ${#fields.errors('currencyKey')}" th:text="${err}"></p>
+            </div>
         </div>
-    </div>
 
-    <input type="submit" class="btn btn-primary" value="Register"/>
-</form>
-
+        <input type="submit" class="btn btn-primary" value="Register"/>
+        <a th:href="@{/} " class="btn btn-secondary">Back</a>
+    </form>
+</div>
 </body>
 </html>

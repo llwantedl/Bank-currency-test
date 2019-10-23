@@ -3,6 +3,7 @@
 <head>
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+    <script th:src="@{/resources/js/login-page-script.js}"></script>
     <meta charset="utf-8"/>
     <title>Login page</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
@@ -15,9 +16,14 @@
     <h1>Welcome to Test Bank!</h1>
 
     <div class="content-container">
+
+        <div class="login-error-container alert alert-danger" role="alert" style="display:none;">
+            Wrong login or password!
+        </div>
+
+
         <!--/*@thymesVar id="creds" type="com.test.privat.currency.models.security.Credentials"*/-->
         <form th:object="${creds}" class="sign-in-form" method="post" th:action="@{/login}">
-
             <div class="form-group">
                 <label for="user-login-input">Login</label>
                 <input th:field="*{login}" id="user-login-input" type="text" class="form-control"/>

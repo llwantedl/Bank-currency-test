@@ -1,30 +1,14 @@
 package com.test.privat.currency.models.dtolayer.wrappers;
 
-public class TransferDetailsWrapper {
+public class TransferWrapper {
 
-    private String sourceCurrency;
-    private String destinationCurrency;
     private String transferRate;
     private String sourcePay;
     private String destinationReceive;
+    private String commissionPercentage;
+    private String commissionValue;
 
-    public TransferDetailsWrapper() {
-    }
-
-    public String getSourceCurrency() {
-        return sourceCurrency;
-    }
-
-    public void setSourceCurrency(String sourceCurrency) {
-        this.sourceCurrency = sourceCurrency;
-    }
-
-    public String getDestinationCurrency() {
-        return destinationCurrency;
-    }
-
-    public void setDestinationCurrency(String destinationCurrency) {
-        this.destinationCurrency = destinationCurrency;
+    public TransferWrapper() {
     }
 
     public String getTransferRate() {
@@ -49,5 +33,21 @@ public class TransferDetailsWrapper {
 
     public void setDestinationReceive(String destinationReceive) {
         this.destinationReceive = destinationReceive;
+    }
+
+    public String getCommissionPercentage() {
+        return commissionPercentage;
+    }
+
+    public void setCommissionPercentage(String commission) {
+        this.commissionPercentage = commission;
+    }
+
+    public String getCommissionValue() {
+        return commissionValue;
+    }
+
+    public void setCommissionValue(String commissionValue) {
+        this.commissionValue = commissionValue;
     }
 }
