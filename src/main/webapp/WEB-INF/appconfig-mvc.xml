@@ -27,7 +27,7 @@
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
             <list>
-                <value>/resources/validation-errors</value>
+                <value>classpath:validation-errors</value>
             </list>
         </property>
     </bean>

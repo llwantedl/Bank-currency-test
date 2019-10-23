@@ -18,7 +18,7 @@
 
 <div class="container">
     <div class="row margin-block">
-        <div class="col-4">
+        <div class="col-md-4">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title" th:text="'Hello, ' + ${remoteUser.login}"></h5>
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-7">
+        <div class="col-md-7">
             <div id="user-wallets-menu" class="card" style="display: none; margin-left: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Wallets</h5>
@@ -70,7 +70,6 @@
     </div>
 </div>
 
-
 <!--TRANSFER MONEY MODAL DIALOG-->
 <div id="transfer-money-modal-dialog" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -82,33 +81,40 @@
                 </button>
             </div>
             <div class="modal-body">
+
+                <div class="transfer-money-error-container">
+
+                </div>
+
                 <div class="transfer-part transfer-phase-1">
-                    <form onsubmit="return false;">
+                    <!--/*@thymesVar id="transferForm" type="com.test.privat.currency.models.dtolayer.wrappers.TransferForm"*/-->
+                    <form id="transfer-money-form" method="post" th:object="${transferForm}" onsubmit="return false;">
                         <div class="form-group">
                             <label for="transfer-from-wallet">From wallet</label>
-                            <input id="transfer-from-wallet" type="text" class="form-control" disabled/>
+                            <input id="transfer-from-wallet" th:field="*{sourceWalletKey}" type="text" class="form-control" readonly/>
                         </div>
 
                         <div class="form-group">
                             <label for="transfer-to-wallet">To wallet</label>
-                            <input id="transfer-to-wallet" type="text" class="form-control"/>
+                            <input id="transfer-to-wallet" th:field="*{destinationWalletKey}" type="text" class="form-control"/>
                         </div>
 
                         <div class="form-group">
                             <label for="transfer-money-amount" th:text="'Amount (' + ${remoteUser.currencyKey} + ')'">Amount</label>
-                            <input id="transfer-money-amount" type="number" class="form-control"/>
+                            <input id="transfer-money-amount" th:field="*{amount}" type="number" class="form-control"/>
                         </div>
+
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                     </form>
                 </div>
                 <div class="transfer-part transfer-phase-2">
-                    <p>Your currency</p>
-                    <p>Receiver currency</p>
-                    <p>Currency Rate</p>
-                    <p>You will pay</p>
-                    <p>Receiver will get</p>
+                    <p>Commission: <span class="transfer-info transfer-commission"></span></p>
+                    <p>You will pay: <span class="transfer-info transfer-sender-payment"></span></p>
+                    <p>Receiver will get: <span class="transfer-info transfer-receiver-money"></span></p>
+                    <p>Currency Rate: <span class="transfer-info transfer-currency-rate"></span></p>
                 </div>
                 <div class="transfer-part transfer-phase-3">
-                    <p>Status</p>
+                    <p>Operation status: <span class="transfer-info transfer-status"></span></p>
                 </div>
             </div>
             <div class="modal-footer">

@@ -3,6 +3,7 @@ package com.test.privat.currency.models.services;
 import com.test.privat.currency.models.dtolayer.wrappers.WalletForm;
 import com.test.privat.currency.models.entities.User;
 import com.test.privat.currency.models.entities.Wallet;
+import com.test.privat.currency.models.exceptions.InsufficientFundsException;
 import com.test.privat.currency.models.repositories.UserRepository;
 import com.test.privat.currency.models.repositories.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +62,18 @@ public class WalletServiceImpl implements WalletService {
     public void addToBalance(Wallet wallet, BigDecimal amount) {
         BigDecimal currentBalance = wallet.getBalance();
         wallet.setBalance(currentBalance.add(amount));
+        walletRepository.save(wallet);
     }
 
     @Override
-    public void subtractFromBalance(Wallet wallet, BigDecimal amount) {
+    public void subtractFromBalance(Wallet wallet, BigDecimal amount) throws InsufficientFundsException {
         BigDecimal currentBalance = wallet.getBalance();
+
+        if(currentBalance.compareTo(amount) < 0){
+            throw new InsufficientFundsException();
+        }
+
         wallet.setBalance(currentBalance.subtract(amount));
+        walletRepository.save(wallet);
     }
 }

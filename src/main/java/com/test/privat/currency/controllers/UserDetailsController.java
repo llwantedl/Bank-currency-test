@@ -1,7 +1,6 @@
 package com.test.privat.currency.controllers;
 
 import com.test.privat.currency.models.dtolayer.services.OperationDTOService;
-import com.test.privat.currency.models.dtolayer.services.UserDetailsDTOService;
 import com.test.privat.currency.models.dtolayer.services.WalletDTOService;
 import com.test.privat.currency.models.dtolayer.wrappers.OperationWrapper;
 import com.test.privat.currency.models.dtolayer.wrappers.PaginatedWrapper;
@@ -15,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("rest")
@@ -43,9 +45,9 @@ public class UserDetailsController {
         User remoteUser = authenticationService.getRemoteUser();
 
         try {
-            return new ResponseEntity<>(walletDTOService.getWalletDetails(remoteUser), HttpStatus.OK);
+            return ResponseEntity.ok(walletDTOService.getWalletDetails(remoteUser));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -57,12 +59,12 @@ public class UserDetailsController {
         Wallet requestWallet = walletService.getByKey(walletKey);
 
         if (!authenticationService.isRemoteUser(requestWallet.getUser())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         try {
-            return new ResponseEntity<>(operationDTOService.getPage(requestWallet, page), HttpStatus.OK);
+            return ResponseEntity.ok(operationDTOService.getPage(requestWallet, page));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
     }
 

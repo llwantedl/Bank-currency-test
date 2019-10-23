@@ -6,7 +6,7 @@ public class PaginationUtils {
         try {
             return Integer.parseInt(page);
         } catch (NumberFormatException e) {
-            return 1;
+            return 0;
         }
     }
 }

@@ -3,6 +3,7 @@ package com.test.privat.currency.models.services;
 import com.test.privat.currency.models.dtolayer.wrappers.WalletForm;
 import com.test.privat.currency.models.entities.User;
 import com.test.privat.currency.models.entities.Wallet;
+import com.test.privat.currency.models.exceptions.InsufficientFundsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +16,5 @@ public interface WalletService {
     List<Wallet> getByUser(User user);
     Wallet getByKey(String key);
     void addToBalance(Wallet wallet, BigDecimal amount);
-    void subtractFromBalance(Wallet wallet, BigDecimal amount);
+    void subtractFromBalance(Wallet wallet, BigDecimal amount) throws InsufficientFundsException;
 }

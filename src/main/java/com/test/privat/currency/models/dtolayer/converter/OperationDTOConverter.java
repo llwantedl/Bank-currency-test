@@ -5,6 +5,8 @@ import com.test.privat.currency.models.entities.Currency;
 import com.test.privat.currency.models.entities.Operation;
 import com.test.privat.currency.models.entities.User;
 import com.test.privat.currency.models.entities.Wallet;
+import com.test.privat.currency.models.exceptions.UserNotFoundException;
+import com.test.privat.currency.models.services.AuthenticationService;
 import com.test.privat.currency.models.services.OperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,9 +16,13 @@ public class OperationDTOConverter implements DTOConverter<Operation, OperationW
 
     private final OperationService operationService;
 
+    private final AuthenticationService authenticationService;
+
     @Autowired
-    public OperationDTOConverter(OperationService operationService) {
+    public OperationDTOConverter(OperationService operationService,
+                                 AuthenticationService authenticationService) {
         this.operationService = operationService;
+        this.authenticationService = authenticationService;
     }
 
     @Override
@@ -37,6 +43,14 @@ public class OperationDTOConverter implements DTOConverter<Operation, OperationW
         Currency sourceCurrency = sourceUser.getValueCurrency();
         Currency destinationCurrency = destinationUser.getValueCurrency();
 
+        boolean isOutgoingOperation;
+
+        try {
+            isOutgoingOperation = authenticationService.isRemoteUser(sourceUser);
+        } catch (UserNotFoundException e) {
+            isOutgoingOperation = false;
+        }
+
         operationWrapper.setAmount(entity.getAmount().toPlainString());
         operationWrapper.setDestinationUser(destinationUser.getLogin());
         operationWrapper.setDestinationCurrencyKey(destinationCurrency.getKey());
@@ -47,6 +61,7 @@ public class OperationDTOConverter implements DTOConverter<Operation, OperationW
         operationWrapper.setRate(String.valueOf(entity.getRate()));
         operationWrapper.setKey(entity.getKey());
         operationWrapper.setTransferDate(entity.getTransferDate().toString());
+        operationWrapper.setOutgoing(isOutgoingOperation);
 
         return operationWrapper;
     }

@@ -36,8 +36,7 @@ var renderTruncation = function () {
 };
 
 function pagination(currentPage, lastPage, action) {
-
-    var paginator = $("<ul></ul>").addClass("pagination");
+    var paginator = $("<ul></ul>").addClass("pagination").addClass("content-block");
 
     paginator.append(renderPrevious(currentPage, action));
 

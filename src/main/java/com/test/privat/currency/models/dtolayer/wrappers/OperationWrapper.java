@@ -11,6 +11,7 @@ public class OperationWrapper {
     private String sourceUser;
     private String destinationUser;
     private String transferDate;
+    private boolean isOutgoing;
 
     public OperationWrapper() {
     }
@@ -93,5 +94,13 @@ public class OperationWrapper {
 
     public void setTransferDate(String transferDate) {
         this.transferDate = transferDate;
+    }
+
+    public boolean isOutgoing() {
+        return isOutgoing;
+    }
+
+    public void setOutgoing(boolean outgoing) {
+        isOutgoing = outgoing;
     }
 }
