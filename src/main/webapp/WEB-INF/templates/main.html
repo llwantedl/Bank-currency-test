@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="remoteUser" type="com.test.privat.currency.models.dtolayer.wrappers.UserDetailsWrapper"*/-->
+<head>
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+    <script th:src="@{/resources/js/pagination-controller.js}"></script>
+    <script th:src="@{/resources/js/main-page-script.js}"></script>
+    <meta charset="utf-8"/>
+    <meta name="user-currency-key" th:content="${remoteUser.currencyKey}">
+    <meta name="context-path" th:href="@{/}"/>
+    <title>Main page</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/css/main-style.css}">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row margin-block">
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="'Hello, ' + ${remoteUser.login}"></h5>
+                    <div class="card-text form-group">
+                        <div th:text="'Your email: ' + ${remoteUser.email}"></div>
+                        <div th:text="'Your operating currency: ' + ${remoteUser.currencyKey}"></div>
+                    </div>
+
+                    <button id="user-wallets-button" class="btn btn-primary">Manage wallets</button>
+                    <button id="user-logout-button" class="btn btn-secondary">Log Out</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div id="user-wallets-menu" class="card" style="display: none; margin-left: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">Wallets</h5>
+                    <div id="user-wallets-container" class="card-text form-group">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="user-logout-form" method="post" th:action="@{/logout}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+</form>
+
+<!--TRANSFERS MODAL DIALOG-->
+<div id="transfers-modal-dialog" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Wallet transfers history</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="user-wallet-transfers-container" class="modal-body">
+
+            </div>
+            <div id="user-wallet-transfers-pagination-controller"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--TRANSFER MONEY MODAL DIALOG-->
+<div id="transfer-money-modal-dialog" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Wallet transfers history</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="transfer-money-error-container">
+
+                </div>
+
+                <div class="transfer-part transfer-phase-1">
+                    <!--/*@thymesVar id="transferForm" type="com.test.privat.currency.models.dtolayer.wrappers.TransferForm"*/-->
+                    <form id="transfer-money-form" method="post" th:object="${transferForm}" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="transfer-from-wallet">From wallet</label>
+                            <input id="transfer-from-wallet" th:field="*{sourceWalletKey}" type="text" class="form-control" readonly/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transfer-to-wallet">To wallet</label>
+                            <input id="transfer-to-wallet" th:field="*{destinationWalletKey}" type="text" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transfer-money-amount" th:text="'Amount (' + ${remoteUser.currencyKey} + ')'">Amount</label>
+                            <input id="transfer-money-amount" th:field="*{amount}" type="number" class="form-control"/>
+                        </div>
+
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    </form>
+                </div>
+                <div class="transfer-part transfer-phase-2">
+                    <p>Commission: <span class="transfer-info transfer-commission"></span></p>
+                    <p>You will pay: <span class="transfer-info transfer-sender-payment"></span></p>
+                    <p>Receiver will get: <span class="transfer-info transfer-receiver-money"></span></p>
+                    <p>Currency Rate: <span class="transfer-info transfer-currency-rate"></span></p>
+                </div>
+                <div class="transfer-part transfer-phase-3">
+                    <p>Operation status: <span class="transfer-info transfer-status"></span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="proceed-transfer-money" type="button" class="btn btn-primary transfer-part transfer-phase-1">Proceed</button>
+                <button id="submit-transfer-money" type="button" class="btn btn-primary transfer-part transfer-phase-2">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

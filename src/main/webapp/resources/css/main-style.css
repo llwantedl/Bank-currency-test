@@ -1,0 +1,25 @@
+.content-container{
+    background-color: #5c93d9;
+    border-radius: 5px;
+    display: inline-block;
+    width: auto;
+    padding: 1.0rem;
+}
+
+.window-page{
+    text-align: center;
+}
+
+.validation-error{
+    color: darkred;
+    display: block;
+    padding: 3px;
+}
+
+.margin-block{
+    margin-top: 10px;
+}
+
+.content-block{
+    padding: 1.5rem;
+}

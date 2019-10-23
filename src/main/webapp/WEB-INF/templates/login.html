@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+    <script th:src="@{/resources/js/login-page-script.js}"></script>
+    <meta charset="utf-8"/>
+    <title>Login page</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/css/main-style.css}">
+</head>
+
+<body>
+
+<div class="window-page">
+    <h1>Welcome to Test Bank!</h1>
+
+    <div class="content-container">
+
+        <div class="login-error-container alert alert-danger" role="alert" style="display:none;">
+            Wrong login or password!
+        </div>
+
+
+        <!--/*@thymesVar id="creds" type="com.test.privat.currency.models.security.Credentials"*/-->
+        <form th:object="${creds}" class="sign-in-form" method="post" th:action="@{/login}">
+            <div class="form-group">
+                <label for="user-login-input">Login</label>
+                <input th:field="*{login}" id="user-login-input" type="text" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label for="user-password-input">Password</label>
+                <input th:field="*{password}" id="user-password-input" type="password" class="form-control"/>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+
+            <p>Don't have an account?
+                <a th:href="@{/register}">Sign up</a>
+            </p>
+        </form>
+    </div>
+</div>
+</body>
+</html>
