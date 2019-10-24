@@ -10,7 +10,7 @@ TODO:
 How to use:
 1. If you do not have mysql installed go to step 2, otherwise to step 3
 2. Install mysql and configure mysql user to access database
-3. Change Bank-currency-test/src/main/webapp/WEB-INF/classes/database.properties to your database data
+3. Change Bank-currency-test/src/main/webapp/WEB-INF/classes/database.properties variables to your database data
 4. Run Bank-currency-test/sql/database-tables-init.sql and then Bank-currency-test/sql/database-data-init.sql scripts in mysql
 5. Build and Run project
 6. Test users:
